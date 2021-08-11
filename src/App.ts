@@ -1,4 +1,5 @@
 import * as express from "express"
+import * as ehb from "express-handlebars"
 import * as cors from "cors"
 
 export class App {
@@ -7,6 +8,12 @@ export class App {
 
     constructor(port : number, controllers : any) {
         this.app = express()
+        this.app.engine('handlebars', ehb())
+        this.app.set('view engine', 'handlebars')
+        this.app.set('views', __dirname+'/views')
+
+        this.app.use(express.static(__dirname+'/public'))
+
         this.app.use(cors())
         this.app.use(express.json())
         this.app.use(express.urlencoded({extended:true}))
